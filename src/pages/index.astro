@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro'
+import Certifications from "../components/Certifications.astro";
 import Socials from '../components/Socials.astro'
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
@@ -10,9 +11,10 @@ import Socials from '../components/Socials.astro'
 
 <Layout>
   <div class="h-full w-full flex items-center justify-center">
-    <div class="h-full max-w-lg flex flex-col items-start justify-center gap-20">
+    <div class="h-full max-w-lg flex flex-col items-start justify-center">
       <Hero />
-      <!-- <Socials /> -->
+      <Socials />
+      <Certifications />
     </div>
   </div>
 </Layout>
