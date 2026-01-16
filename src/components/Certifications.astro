@@ -1,10 +1,29 @@
-<div class="flex flex-col gap-4 mt-16">
-  <div>
-    <h1 class="text-white text-lg font-semibold">Certifications</h1>
+---
+const certifications = [
+  { name: "AWS Certified Cloud Practitioner", badge: "/cloud-practitioner-badge.png" },
+  { name: "AWS Certified Solutions Architect - Associate", badge: "/solutions-architect-associate-badge.png" },
+  { name: "AWS Certified Developer - Associate", badge: "/developer-associate-badge.png" },
+  { name: "AWS Certified CloudOps Engineer - Associate", badge: "/cloudops-engineer-associate-badge.png" }
+];
+---
+
+<section aria-labelledby="certifications-heading" class="flex flex-col gap-4">
+  <h2 id="certifications-heading" class="text-white text-lg font-semibold">Certifications</h2>
+  <div class="grid grid-cols-2 gap-3" role="list">
+    {certifications.map((cert) => (
+      <div class="flex items-center gap-3 bg-white/5 backdrop-blur-sm rounded-xl p-3 transition duration-300 ease-out hover:bg-white/10 hover:shadow-lg hover:shadow-violet-500/10" role="listitem">
+        <img
+          src={cert.badge}
+          alt=""
+          aria-hidden="true"
+          width="48"
+          height="48"
+          loading="lazy"
+          decoding="async"
+          class="w-12 h-12"
+        />
+        <span class="text-white text-sm">{cert.name}</span>
+      </div>
+    ))}
   </div>
-  <div>
-    <ul>
-      <li class="text-white">AWS Certified Cloud Practitioner</li>
-    </ul>
-  </div>
-</div>
+</section>

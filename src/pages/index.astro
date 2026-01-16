@@ -2,21 +2,109 @@
 import "../styles/global.css";
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro'
+import Experience from "../components/Experience.astro";
 import Certifications from "../components/Certifications.astro";
 import Socials from '../components/Socials.astro'
 import Projects from "../components/Projects.astro";
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-  <div class="h-full w-full flex items-center justify-center">
-    <div class="h-full max-w-lg flex flex-col items-start justify-center">
+  <!-- Hero Section - Full Viewport Height -->
+  <section class="min-h-screen w-full flex flex-col items-center justify-center relative px-4">
+    <div class="max-w-lg w-full flex flex-col items-start animate-section relative">
       <Hero />
       <Socials />
+    </div>
+
+    <!-- Scroll Indicator -->
+    <a href="#content" class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-zinc-500 hover:text-violet-400 transition duration-300 cursor-pointer">
+      <span class="text-sm">Scroll</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-5 h-5 animate-bounce"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
+      </svg>
+    </a>
+  </section>
+
+  <!-- Content Sections -->
+  <div id="content" class="w-full flex flex-col items-center px-4 py-24 gap-24">
+    <div class="max-w-lg w-full animate-section">
+      <Experience />
+    </div>
+
+    <div class="max-w-lg w-full animate-section">
       <Certifications />
+    </div>
+
+    <div class="max-w-lg w-full animate-section pb-8">
       <Projects />
     </div>
   </div>
 </Layout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Animate sections on scroll
+  document.querySelectorAll('.animate-section').forEach((section, index) => {
+    // Skip the first section (hero) - it should be visible immediately
+    if (index === 0) {
+      gsap.set(section, { opacity: 1, y: 0 });
+      return;
+    }
+
+    gsap.fromTo(section,
+      {
+        opacity: 0,
+        y: 50
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+  });
+
+  // Stagger animation for cards within sections
+  document.querySelectorAll('.animate-section').forEach((section, index) => {
+    if (index === 0) return;
+
+    const cards = section.querySelectorAll('.bg-white\\/5');
+    if (cards.length > 0) {
+      gsap.fromTo(cards,
+        {
+          opacity: 0,
+          y: 30
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+    }
+  });
+</script>

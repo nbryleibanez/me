@@ -1,14 +1,82 @@
+---
+import backgroundSvg from '../assets/background.svg?raw';
+
+const title = "Nhyl Ibanez - DevOps Engineer & AWS Community Co-Lead";
+const description = "DevOps Engineer at Career TEAM and Co-Lead of AWS User Group Davao. Building resilient systems and empowering cloud communities in the Philippines.";
+const siteUrl = "https://nbryleibanez.dev";
+const ogImage = `${siteUrl}/og-image.png`;
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="canonical" href={siteUrl} />
 		<meta name="generator" content={Astro.generator} />
-		<title>nbryleibanez</title>
+
+		<!-- Primary Meta Tags -->
+		<title>{title}</title>
+		<meta name="title" content={title} />
+		<meta name="description" content={description} />
+		<meta name="author" content="Nhyl Ibanez" />
+		<meta name="robots" content="index, follow" />
+		<meta name="theme-color" content="#000000" />
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={siteUrl} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:locale" content="en_US" />
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:url" content={siteUrl} />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+
+		<!-- JSON-LD Structured Data -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "Person",
+			"name": "Nhyl Ibanez",
+			"url": siteUrl,
+			"jobTitle": "DevOps Engineer",
+			"worksFor": {
+				"@type": "Organization",
+				"name": "Career TEAM"
+			},
+			"address": {
+				"@type": "PostalAddress",
+				"addressLocality": "Davao City",
+				"addressCountry": "Philippines"
+			},
+			"sameAs": [
+				"https://github.com/nbryleibanez",
+				"https://linkedin.com/in/nbryleibanez"
+			],
+			"knowsAbout": ["DevOps", "AWS", "Cloud Computing", "Infrastructure"],
+			"hasCredential": [
+				{"@type": "EducationalOccupationalCredential", "name": "AWS Certified Cloud Practitioner"},
+				{"@type": "EducationalOccupationalCredential", "name": "AWS Certified Solutions Architect - Associate"},
+				{"@type": "EducationalOccupationalCredential", "name": "AWS Certified Developer - Associate"},
+				{"@type": "EducationalOccupationalCredential", "name": "AWS Certified CloudOps Engineer - Associate"}
+			]
+		})} />
 	</head>
 	<body class="bg-black">
-		<slot />
+		<!-- Skip to content link for accessibility -->
+		<a href="#content" class="skip-link">Skip to content</a>
+
+		<div id="background" set:html={backgroundSvg} aria-hidden="true"></div>
+		<div id="particles" aria-hidden="true"></div>
+		<main>
+			<slot />
+		</main>
 	</body>
 </html>
 
@@ -18,5 +86,86 @@
 		margin: 0;
 		width: 100%;
 		height: 100%;
+		scroll-behavior: smooth;
+	}
+
+	/* Skip link for accessibility */
+	.skip-link {
+		position: absolute;
+		top: -100%;
+		left: 50%;
+		transform: translateX(-50%);
+		background: #8b5cf6;
+		color: white;
+		padding: 0.75rem 1.5rem;
+		border-radius: 0.5rem;
+		z-index: 100;
+		text-decoration: none;
+		font-weight: 500;
+		transition: top 0.2s ease;
+	}
+
+	.skip-link:focus {
+		top: 1rem;
+		outline: 2px solid white;
+		outline-offset: 2px;
+	}
+
+	#particles {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		pointer-events: none;
+		overflow: hidden;
+	}
+
+	#particles :global(.particle) {
+		position: absolute;
+		border-radius: 50%;
+		pointer-events: none;
 	}
 </style>
+
+<script>
+	import { gsap } from 'gsap';
+
+	const particleContainer = document.getElementById('particles');
+	const colors = ['#a78bfa', '#c084fc', '#e879f9', '#8b5cf6'];
+
+	// Create more particles spread across the viewport
+	for (let i = 0; i < 40; i++) {
+		const particle = document.createElement('div');
+		particle.className = 'particle';
+		const size = Math.random() * 5 + 2;
+		particle.style.width = `${size}px`;
+		particle.style.height = `${size}px`;
+		particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+		particle.style.opacity = `${Math.random() * 0.4 + 0.1}`;
+		particle.style.left = `${Math.random() * 100}%`;
+		particle.style.top = `${Math.random() * 100}%`;
+		particle.style.boxShadow = `0 0 ${size * 2}px ${colors[Math.floor(Math.random() * colors.length)]}`;
+		particleContainer?.appendChild(particle);
+
+		// Animate each particle floating
+		gsap.to(particle, {
+			x: `random(-150, 150)`,
+			y: `random(-150, 150)`,
+			duration: `random(15, 30)`,
+			repeat: -1,
+			yoyo: true,
+			ease: 'sine.inOut',
+		});
+
+		// Subtle pulsing opacity
+		gsap.to(particle, {
+			opacity: `random(0.05, 0.5)`,
+			duration: `random(3, 6)`,
+			repeat: -1,
+			yoyo: true,
+			ease: 'sine.inOut',
+		});
+	}
+</script>

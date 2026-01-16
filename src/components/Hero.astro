@@ -1,9 +1,87 @@
-<div class="flex gap-16">
-  <div class="flex items-center">
-    <h1 class="text-white font-light text-5xl">Hi, I'm <span class="font-semibold">Nhyl</span></h1>
+<header class="flex flex-col gap-6 relative z-10">
+  <!-- Location -->
+  <div class="flex items-center gap-2 text-zinc-500 text-sm">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+    </svg>
+    <span>Davao City, Philippines</span>
   </div>
-  <div class="flex flex-col justify-center gap">
-    <p class="text-white">DevSecOps Engineer</p>
-    <a class="text-white transition duration-150 ease-in-out hover:text-orange-400" href="https://ingenuity.ph" target="_blank">Ingenuity Software</a>
+
+  <!-- Main heading -->
+  <div>
+    <h1 class="text-white font-light text-5xl" aria-label="Hi, I'm Nhyl">
+      Hi, I'm <span id="typed-name" class="font-semibold gradient-text" aria-hidden="true"></span><span id="cursor" class="gradient-text animate-pulse" aria-hidden="true">|</span>
+    </h1>
+    <!-- Tagline -->
+    <p class="text-zinc-400 text-lg mt-3">Building resilient systems & empowering cloud communities.</p>
   </div>
-</div>
+
+  <!-- Role Pills -->
+  <div class="flex flex-wrap gap-3" role="list" aria-label="Current roles">
+    <!-- DevOps Engineer -->
+    <div class="flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 transition duration-300 hover:bg-white/10" role="listitem">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-violet-400" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+      </svg>
+      <div class="flex flex-col">
+        <span class="text-white text-sm font-medium">DevOps Engineer</span>
+        <span class="text-zinc-500 text-xs">Career TEAM</span>
+      </div>
+    </div>
+
+    <!-- AWS Community Lead -->
+    <div class="flex items-center gap-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 transition duration-300 hover:bg-white/10" role="listitem">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-orange-400" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+      </svg>
+      <div class="flex flex-col">
+        <span class="text-white text-sm font-medium">Co-Lead</span>
+        <span class="text-zinc-500 text-xs">AWS User Group Davao</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .gradient-text {
+    background: linear-gradient(90deg, #a78bfa, #c084fc, #e879f9, #c084fc, #a78bfa);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-shift 3s ease-in-out infinite;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 200% center; }
+  }
+
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  const name = "Nhyl";
+  const typedElement = document.getElementById('typed-name');
+  const cursor = document.getElementById('cursor');
+
+  // Typing animation
+  let index = 0;
+  const typeWriter = () => {
+    if (index < name.length) {
+      typedElement!.textContent += name.charAt(index);
+      index++;
+      setTimeout(typeWriter, 150);
+    } else {
+      // Hide cursor after typing is done
+      setTimeout(() => {
+        gsap.to(cursor, { opacity: 0, duration: 0.5 });
+      }, 1000);
+    }
+  };
+
+  // Start typing after a short delay
+  setTimeout(typeWriter, 500);
+</script>
